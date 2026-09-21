@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un pequeño secreto 🌻</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #050505;
+    color: #ffffff;
+    font-family: Consolas, monospace;
+}
+
+/* PANTALLA TERMINAL */
+
+#terminal {
+    min-height: 100vh;
+    padding: 30px 20px;
+    font-size: 15px;
+}
+
+#output {
+    white-space: pre-wrap;
+    line-height: 1.7;
+}
+
+#entrada {
+    display: none;
+    margin-top: 20px;
+}
+
+input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: Consolas, monospace;
+    font-size: 16px;
+    width: 200px;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* PANTALLA DE FLORES */
+
+#sorpresa {
+    display: none;
+    min-height: 100vh;
+    text-align: center;
+    padding: 35px 20px;
+    color: #604400;
+    font-family: Georgia, serif;
+    background: linear-gradient(
+        180deg,
+        #fff9c4,
+        #ffe66d,
+        #fff1a8
+    );
+    animation: aparecer 2s ease;
+}
+
+#sorpresa h1 {
+    font-size: 35px;
+}
+
+#sorpresa p {
+    font-size: 19px;
+    line-height: 1.6;
+}
+
+#sorpresa img {
+    width: 230px;
+    max-width: 90%;
+    border-radius: 20px;
+    margin: 15px;
+}
+
+.flores {
+    font-size: 35px;
+    animation: flotar 3s infinite ease-in-out;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* RESPUESTA NO */
+
+#rechazo {
+    display: none;
+    margin-top: 20px;
+}
+
+#rechazo button {
+    background: #00ff66;
+    border: none;
+    padding: 10px 18px;
+    font-family: Consolas, monospace;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TERMINAL -->
+
+<div id="terminal">
+    <div id="output"></div>
+
+    <div id="entrada">
+        <span>¿COMPARTIR DATOS A SAMSUNG S20 FE? (SI/NO): </span>
+        <input id="respuesta" autofocus autocomplete="off">
+    </div>
+
+    <div id="rechazo">
+        <p>Solicitud rechazada. No pasa nada :)</p>
+        <button onclick="reiniciar()">Volver a la terminal</button>
+    </div>
+</div>
+
+<!-- SORPRESA -->
+
+<div id="sorpresa">
+    <div class="flores">🌻 🌼 🌻 🌼 🌻</div>
+
+    <h1>¡Sorpresa! 💛</h1>
+    <img src="meh.png" alt="Zoro de One Piece">
+
+    <h2>Un pequeño detalle para ti</h2>
+
+    <p>
+        No te preocupes, no era un hackeo de verdad.<br>
+        Solo quería bromear un poquito. 🌻
+    </p>
+
+    <p>
+       Hoy quería regalarte un pequeño momento bonito,<br>
+porque las personas especiales merecen detalles especiales.
+    </p>
+
+    <p>
+        att: el chilito.<br>
+        
+    </p>
+
+
+</div>
+
+<script>
+const output = document.getElementById("output");
+const entrada = document.getElementById("entrada");
+const respuesta = document.getElementById("respuesta");
+
+let lineas = [
+    "C:\\SYSTEM\\> Inicializando sistema...",
+    "C:\\SYSTEM\\> Cargando archivos secretos...",
+    "C:\\SYSTEM\\> Registrando ubicacion...",
+    "C:\\SYSTEM\\> Revisando galeria...",
+    "C:\\SYSTEM\\> Estableciendo conexión...",
+    "C:\\SYSTEM\\> Analizando usuario...",
+    "C:\\SYSTEM\\> Acceso concedido.",
+    "",
+    "Bienvenida, Domi.",
+    "Se ha encontrado un pequeño error de autentificacion :^ ",
+    "",
+    "Antes de continuar...",
+    "¿Deseas descubrirlo?"
+];
+
+let lineaActual = 0;
+
+function escribir() {
+    if (lineaActual < lineas.length) {
+        output.innerHTML += lineas[lineaActual] + "\n";
+        lineaActual++;
+
+        setTimeout(escribir, 700);
+    } else {
+        entrada.style.display = "block";
+        respuesta.focus();
+    }
+}
+
+respuesta.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        const valor = respuesta.value.trim().toUpperCase();
+
+        if (valor === "SI" || valor === "SÍ") {
+            mostrarSorpresa();
+        } else if (valor === "NO") {
+            entrada.style.display = "none";
+            document.getElementById("rechazo").style.display = "block";
+        } else {
+            output.innerHTML +=
+                "\nRespuesta no válida. Escribe SI o NO.\n";
+
+            respuesta.value = "";
+        }
+    }
+});
+
+function mostrarSorpresa() {
+    document.getElementById("terminal").style.display = "none";
+    document.getElementById("sorpresa").style.display = "block";
+}
+
+function reiniciar() {
+    output.innerHTML = "";
+    lineaActual = 0;
+
+    respuesta.value = "";
+    entrada.style.display = "none";
+    document.getElementById("rechazo").style.display = "none";
+
+    escribir();
+}
+
+escribir();
+</script>
+
+</body>
+</html>
